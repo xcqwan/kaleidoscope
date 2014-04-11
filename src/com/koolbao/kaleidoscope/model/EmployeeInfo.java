@@ -12,7 +12,7 @@ public class EmployeeInfo extends Model {
 	// 姓名
 	@Column(name = "name")
 	public String _name;
-	// 花名
+	/*// 花名
 	@Column(name = "nickname")
 	public String _nickname;
 	// 密码
@@ -62,5 +62,10 @@ public class EmployeeInfo extends Model {
 	public String _dimission_date;
 	// 录入时间
 	@Column(name = "create_time")
-	public String _create_time;
+	public String _create_time;*/
+	
+	@Override
+	public String toString() {
+		return _employee_id + ", " + _name;
+	}
 }
