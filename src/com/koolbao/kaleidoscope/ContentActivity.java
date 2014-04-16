@@ -40,7 +40,7 @@ public class ContentActivity extends Activity implements OnClickListener {
 		leave_btn = (Button) findViewById(R.id.leave_btn);
 		leave_record_btn = (Button) findViewById(R.id.leave_record_btn);
 		
-		user_nick_tv.setText(SharedPreferencesUtils.with(this).getString("user_nick", "酷宝数据"));
+		user_nick_tv.setText("欢迎你，" + SharedPreferencesUtils.with(this).getString("nickname", "酷宝数据"));
 	}
 
 	@Override

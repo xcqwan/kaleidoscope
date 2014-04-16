@@ -6,5 +6,6 @@ public final class CommonUtils {
 	public static final int UNLOGIN = 0;
 	public static final int LOGIN_ACTION = 11;
 	
-	public static final String LOGIN_URL = "http://shop.koolbao.com/register/login_user";
+	public static final String DEFAULT_SERVER = "http://oa.koolbao.com/";
+	public static final String LOGIN_URL = "http://oa.koolbao.com/staff_management_app/login";
 }

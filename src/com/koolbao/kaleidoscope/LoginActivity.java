@@ -1,19 +1,21 @@
 package com.koolbao.kaleidoscope;
 
-import java.util.HashMap;
-import java.util.Map;
+import retrofit.Callback;
 
-import com.koolbao.kaleidoscope.event.ASyncCallBackEvent;
-import com.koolbao.kaleidoscope.event.ASyncPreExecuteEvent;
-import com.koolbao.kaleidoscope.utils.ASyncTaskUtils;
-import com.koolbao.kaleidoscope.utils.CommonUtils;
+import com.koolbao.kaleidoscope.backend.Backend;
+import com.koolbao.kaleidoscope.event.NeedMaskASyncEndEvent;
+import com.koolbao.kaleidoscope.event.NeedMaskASyncStartEvent;
+import com.koolbao.kaleidoscope.model.EmployeeInfo;
+import com.koolbao.kaleidoscope.model.back.EmployeeBack;
+import com.koolbao.kaleidoscope.utils.BusProvider;
+import com.koolbao.kaleidoscope.utils.SharedPreferencesUtils;
 import com.koolbao.kaleidoscope.utils.ToastUtils;
 import com.squareup.otto.Subscribe;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -22,10 +24,33 @@ import android.widget.Toast;
 
 public class LoginActivity extends Activity implements OnClickListener {
 	private EditText user_nick_et;
-	private EditText phone_et;
+	private EditText psd_et;
 	private Button submit_btn;
+	private ProgressDialog progressDialog;
 	
-	private ASyncTaskUtils asyncTask; 
+	private Callback<EmployeeBack> loginCallBack = new Callback<EmployeeBack>() {
+		public void success(EmployeeBack employeeBack, retrofit.client.Response arg1) {
+			BusProvider.getInstance().post(new NeedMaskASyncEndEvent());
+			if (employeeBack.status == 0) {
+				EmployeeInfo employeeinfo = employeeBack.getEmployee();
+				employeeinfo.save();
+				
+				SharedPreferencesUtils.with(getApplicationContext()).putString("employee_id", employeeinfo.employee_id);
+				SharedPreferencesUtils.with(getApplicationContext()).putString("nickname", employeeinfo.nickname);
+				
+				Intent intent = new Intent(LoginActivity.this, ContentActivity.class);
+				startActivity(intent);
+				overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+				LoginActivity.this.finish();
+			} else {
+				ToastUtils.errorFormPut(getApplicationContext());
+			}
+		};
+		public void failure(retrofit.RetrofitError arg0) {
+			BusProvider.getInstance().post(new NeedMaskASyncEndEvent());
+			ToastUtils.errorNetWork(getApplicationContext());
+		};
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +71,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 	protected void onPause() {
 		super.onPause();
 		BusProvider.getInstance().unregister(this);
-		
-		if (asyncTask != null) {
-			asyncTask.cancel(true);
-			asyncTask = null;
-		}
 	}
 	
 	private void initListener() {
@@ -59,7 +79,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 	private void initCustom() {
 		user_nick_et = (EditText) findViewById(R.id.user_nick_et);
-		phone_et = (EditText) findViewById(R.id.phone_et);
+		psd_et = (EditText) findViewById(R.id.psd_et);
 		submit_btn = (Button) findViewById(R.id.submit_btn);
 	}
 
@@ -67,47 +87,37 @@ public class LoginActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		if (v.getId() == submit_btn.getId()) {
 			if (checkForm()) {
-				Map<String, String> param = new HashMap<String, String>();
-				param.put("tel", phone_et.getText().toString());
-				param.put("password", user_nick_et.getText().toString());
-				
-				if (asyncTask != null) {
-					asyncTask.cancel(true);
-				}
-				asyncTask = new ASyncTaskUtils(CommonUtils.LOGIN_URL, CommonUtils.LOGIN_ACTION, param);
-				asyncTask.execute();
+				BusProvider.getInstance().post(new NeedMaskASyncStartEvent());
 			}
 		}
 	}
 	
 	@Subscribe
-	public void onASyncPreExecute(ASyncPreExecuteEvent event) {
-		Log.i("test", "need mask");
+	public void onNeedMaskASyncStart(NeedMaskASyncStartEvent event) {
+		if (progressDialog == null) {
+			progressDialog = new ProgressDialog(this);
+		}
+		
+		String nickname = user_nick_et.getText().toString();
+		String password = psd_et.getText().toString();
+		Backend.getInstance().postLoginForm(nickname, password, loginCallBack);
+		
+		progressDialog.show();
 	}
 	
 	@Subscribe
-	public void onASyncCallBack(ASyncCallBackEvent event) {
-		if (event.action != CommonUtils.LOGIN_ACTION) {
+	public void onNeedMaskASyncEnd(NeedMaskASyncEndEvent event) {
+		if (progressDialog == null) {
 			return;
 		}
-		String resultJSON = event.resp;
-		if (resultJSON == null) {
-			ToastUtils.errorNetWork(LoginActivity.this);
-			return;
-		}
-		Log.i("test", event.toString());
-		//处理登录请求结果
-		
-		startActivity(new Intent(LoginActivity.this, ContentActivity.class));
-		overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-		finish();
+		progressDialog.dismiss();
 	}
-
+	
 	private boolean checkForm() {
 		String user_nick = user_nick_et.getText().toString();
-		String tel = phone_et.getText().toString();
-		if (user_nick.isEmpty() || tel.isEmpty()) {
-			Toast.makeText(this, "花名或手机号不能为空", Toast.LENGTH_SHORT).show();
+		String psd = psd_et.getText().toString();
+		if (user_nick.isEmpty() || psd.isEmpty()) {
+			Toast.makeText(this, "花名或密码不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		return true;

@@ -9,7 +9,7 @@
     <string name="leave">请假填一下</string>
     <string name="leave_record">请假记录</string>
     <string name="tao_nick">花名：</string>
-    <string name="password">手机：</string>
+    <string name="password">密码：</string>
     <string name="login">登录</string>
 
 </resources>

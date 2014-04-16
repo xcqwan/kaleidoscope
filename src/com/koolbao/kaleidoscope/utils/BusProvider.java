@@ -1,4 +1,4 @@
-package com.koolbao.kaleidoscope;
+package com.koolbao.kaleidoscope.utils;
 
 import com.squareup.otto.Bus;
 

@@ -8,64 +8,64 @@ import com.activeandroid.annotation.Table;
 public class EmployeeInfo extends Model {
 	// 职工ID
 	@Column(name = "employee_id")
-	public int _employee_id;
+	public String employee_id;
 	// 姓名
 	@Column(name = "name")
-	public String _name;
-	/*// 花名
+	public String name;
+	// 花名
 	@Column(name = "nickname")
-	public String _nickname;
+	public String nickname;
 	// 密码
 	@Column(name = "password")
-	public String _password;
+	public String password;
 	// 性别
 	@Column(name = "sex")
-	public String _sex;
+	public String sex;
 	// 籍贯
-	@Column(name = "native")
-	public String _native;
+	@Column(name = "native_place")
+	public String native_place;
 	// 政治面貌
 	@Column(name = "politics")
-	public String _politics;
+	public String politics;
 	// 生日
 	@Column(name = "birthday")
-	public String _birthday;
+	public String birthday;
 	// 手机
 	@Column(name = "tel")
-	public String _tel;
+	public String tel;
 	// QQ
 	@Column(name = "qq")
-	public String _qq;
+	public String qq;
 	// 个人邮箱
-	@Column(name = "company_email")
-	public String _personal_email;
+	@Column(name = "personal_email")
+	public String personal_email;
 	// 公司邮箱
 	@Column(name = "company_email")
-	public String _company_email;
+	public String company_email;
 	// 实习到岗日期
 	@Column(name = "internship_start")
-	public String _internship_start;
+	public String internship_start;
 	// 试用到岗日期
 	@Column(name = "probation_start")
-	public String _probation_start;
+	public String probation_start;
 	// 转正日期
 	@Column(name = "regular_worker_date")
-	public String _regular_worker_date;
+	public String regular_worker_date;
 	// 职位
 	@Column(name = "position")
-	public String _position;
+	public String position;
 	// 所属部门
 	@Column(name = "department")
-	public String _department;
+	public String department;
 	// 离职日期
 	@Column(name = "dimission_date")
-	public String _dimission_date;
+	public String dimission_date;
 	// 录入时间
 	@Column(name = "create_time")
-	public String _create_time;*/
+	public String create_time;
 	
 	@Override
 	public String toString() {
-		return _employee_id + ", " + _name;
+		return employee_id + ", " + name;
 	}
 }
