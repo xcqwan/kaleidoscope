@@ -9,7 +9,25 @@
     <string name="leave">请假填一下</string>
     <string name="leave_record">请假记录</string>
     <string name="tao_nick">花名：</string>
+    <string name="choice_date">2014-04-17</string>
     <string name="password">密码：</string>
+    <string name="leave_form_tel">紧急联系电话 : </string>
+    <string name="leave_form_duration">请假时长(天) : </string>
+    <string name="leave_form_type">请假类型 : </string>
+    <string name="leave_form_reason">请假原因 : </string>
+    <string name="leave_form_start_date">开始时间 : </string>
+    <string name="leave_form_end_date">结束时间 : </string>
+    <string name="leave_form_title">请假条</string>
+    <string name="duration_hint">0.5/1/1.5</string>
+    <string name="type_hint">事假/婚假/年假/病假/调休</string>
     <string name="login">登录</string>
+    <string name="scan_title">扫描二维码绑定</string>
+    <string name="cancel">取消</string>
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_ready">松开刷新数据</string>
+    <string name="xlistview_header_hint_loading">正在加载...</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_footer_hint_normal">查看更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
 
 </resources>

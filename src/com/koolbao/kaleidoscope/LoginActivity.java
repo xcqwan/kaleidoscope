@@ -12,7 +12,6 @@ import com.koolbao.kaleidoscope.utils.SharedPreferencesUtils;
 import com.koolbao.kaleidoscope.utils.ToastUtils;
 import com.squareup.otto.Subscribe;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends Activity implements OnClickListener {
+public class LoginActivity extends BaseActivity implements OnClickListener {
 	private EditText user_nick_et;
 	private EditText psd_et;
 	private Button submit_btn;
@@ -61,18 +60,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 		 initListener();
 	}
 	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		BusProvider.getInstance().register(this);
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		BusProvider.getInstance().unregister(this);
-	}
-	
 	private void initListener() {
 		submit_btn.setOnClickListener(this);
 	}
@@ -107,10 +94,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 	
 	@Subscribe
 	public void onNeedMaskASyncEnd(NeedMaskASyncEndEvent event) {
-		if (progressDialog == null) {
-			return;
+		if (progressDialog != null) {
+			progressDialog.dismiss();
 		}
-		progressDialog.dismiss();
 	}
 	
 	private boolean checkForm() {

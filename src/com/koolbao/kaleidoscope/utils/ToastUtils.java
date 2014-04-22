@@ -12,4 +12,8 @@ public class ToastUtils {
 	public static void errorFormPut(Context context) {
 		Toast.makeText(context, "花名或密码输入错误！", Toast.LENGTH_SHORT).show();
 	}
+	
+	public static void AlarmDIY(Context context, String msg) {
+		Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+	}
 }
