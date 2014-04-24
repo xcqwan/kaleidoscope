@@ -1,44 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@android:color/white" >
 
     <TextView
         android:id="@+id/user_nick_tv"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:padding="20dp"
         android:text="@string/app_name"
         android:textColor="@color/select_bule"
         android:textSize="@dimen/user_nick" />
 
-    <Button
-        android:id="@+id/duty_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/on_duty" />
-    <Button
-        android:id="@+id/duty_record_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/duty_record" />
-    <Button
-        android:id="@+id/leave_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/leave" />
-    
-    <Button
-        android:id="@+id/leave_record_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/leave_record" />
-
-</LinearLayout>
+</RelativeLayout>

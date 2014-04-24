@@ -18,6 +18,8 @@ import com.koolbao.kaleidoscope.utils.CommonUtils;
 import com.koolbao.kaleidoscope.utils.SharedPreferencesUtils;
 import com.koolbao.kaleidoscope.utils.ToastUtils;
 import com.squareup.otto.Subscribe;
+import com.zombie.wonhot.LayoutConstants;
+import com.zombie.wonhot.WonhotLayout;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -25,15 +27,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
 public class ContentActivity extends BaseActivity implements OnClickListener {
 	private TextView user_nick_tv;
-	private Button duty_btn;
-	private Button duty_record_btn;
-	private Button leave_btn;
-	private Button leave_record_btn;
+	private int duty_btn;
+	private int duty_record_btn;
+	private int leave_btn;
+	private int leave_record_btn;
 	private ProgressDialog progressDialog;
 	
 	private String content;
@@ -79,41 +81,41 @@ public class ContentActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_content);
 		
 		initCustom();
-		initListener();
-	}
-
-	private void initListener() {
-		duty_btn.setOnClickListener(this);
-		duty_record_btn.setOnClickListener(this);
-		leave_btn.setOnClickListener(this);
-		leave_record_btn.setOnClickListener(this);
 	}
 
 	private void initCustom() {
 		user_nick_tv = (TextView) findViewById(R.id.user_nick_tv);
-		duty_btn = (Button) findViewById(R.id.duty_btn);
-		duty_record_btn = (Button) findViewById(R.id.duty_record_btn);
-		leave_btn = (Button) findViewById(R.id.leave_btn);
-		leave_record_btn = (Button) findViewById(R.id.leave_record_btn);
+		
+		WonhotLayout wonhot = new WonhotLayout(this);
+		wonhot.setAlignCode(LayoutConstants.CENTERBOTTOM);
+		wonhot.setCenterStyle(R.drawable.composer_button, R.drawable.composer_icn_plus);
+		duty_btn = wonhot.addItem(R.drawable.composer_camera);
+		duty_record_btn = wonhot.addItem(R.drawable.composer_place);
+		leave_btn = wonhot.addItem(R.drawable.composer_sleep);
+		leave_record_btn = wonhot.addItem(R.drawable.composer_thought);
+
+		wonhot.init(200, 500, 100);
+		wonhot.setButtonsOnClickListener(this);
+		addContentView(wonhot, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		
 		user_nick_tv.setText("欢迎你，" + SharedPreferencesUtils.with(this).getString("nickname", "酷宝数据"));
 	}
 
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == duty_btn.getId()) {
+		if (v.getId() == duty_btn) {
 			Intent intent = new Intent(ContentActivity.this, CaptureActivity.class);
 			startActivityForResult(intent, CommonUtils.SCAN_CALLBACK_CODE);
 		}
-		if (v.getId() == duty_record_btn.getId()) {
+		if (v.getId() == duty_record_btn) {
 			Intent intent = new Intent(ContentActivity.this, AttendanceActivity.class);
 			startActivity(intent);
 		}
-		if (v.getId() == leave_btn.getId()) {
+		if (v.getId() == leave_btn) {
 			Intent intent = new Intent(ContentActivity.this, LeaveFormActivity.class);
 			startActivity(intent);
 		}
-		if (v.getId() == leave_record_btn.getId()) {
+		if (v.getId() == leave_record_btn) {
 			Intent intent = new Intent(ContentActivity.this, LeaveListActivity.class);
 			startActivity(intent);
 		}
