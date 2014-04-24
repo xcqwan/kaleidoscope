@@ -23,6 +23,7 @@ import com.zombie.wonhot.WonhotLayout;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -93,8 +94,10 @@ public class ContentActivity extends BaseActivity implements OnClickListener {
 		duty_record_btn = wonhot.addItem(R.drawable.composer_place);
 		leave_btn = wonhot.addItem(R.drawable.composer_sleep);
 		leave_record_btn = wonhot.addItem(R.drawable.composer_thought);
-
-		wonhot.init(200, 500, 100);
+		
+		Point wSize = new Point();
+		getWindowManager().getDefaultDisplay().getSize(wSize);
+		wonhot.init(wSize.x / 2 - 50, 500, 0);
 		wonhot.setButtonsOnClickListener(this);
 		addContentView(wonhot, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		
