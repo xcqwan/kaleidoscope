@@ -41,6 +41,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.koolbao.integralwall.IntegralWallActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.koolbao.kaleidoscope.LoginActivity"
             android:screenOrientation="portrait" >
         </activity>

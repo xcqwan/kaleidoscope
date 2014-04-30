@@ -24,7 +24,7 @@ import com.koolbao.kaleidoscope.widget.XListView.IXListViewListener;
 import android.os.Bundle;
 import android.util.Log;
 
-public class LeaveListActivity extends BaseActivity implements IXListViewListener {
+public class LeaveListActivity extends BaseListActivity implements IXListViewListener {
 	private XListView leave_lv;
 	private LeaveAdapter adapter;
 	
@@ -70,7 +70,7 @@ public class LeaveListActivity extends BaseActivity implements IXListViewListene
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_leavelist);
 		
-		leave_lv = (XListView) findViewById(R.id.leave_lv);
+		leave_lv = (XListView) getListView();
 		leave_lv.setPullLoadEnable(false);
 		leave_lv.setXListViewListener(this);
 		

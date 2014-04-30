@@ -1,9 +1,5 @@
 package com.koolbao.kaleidoscope;
 
-import java.util.Date;
-
-import org.apache.commons.lang3.time.DateFormatUtils;
-
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -32,6 +28,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
 public class ContentActivity extends BaseActivity implements OnClickListener {
+	private WonhotLayout wonhot;
 	private TextView user_nick_tv;
 	private int duty_btn;
 	private int duty_record_btn;
@@ -87,7 +84,7 @@ public class ContentActivity extends BaseActivity implements OnClickListener {
 	private void initCustom() {
 		user_nick_tv = (TextView) findViewById(R.id.user_nick_tv);
 		
-		WonhotLayout wonhot = new WonhotLayout(this);
+		wonhot = new WonhotLayout(this);
 		wonhot.setAlignCode(LayoutConstants.CENTERBOTTOM);
 		wonhot.setCenterStyle(R.drawable.composer_button, R.drawable.composer_icn_plus);
 		duty_btn = wonhot.addItem(R.drawable.composer_camera);
@@ -107,6 +104,8 @@ public class ContentActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == duty_btn) {
+//			startActivity(new Intent(ContentActivity.this, IntegralWallActivity.class));
+//			wonhot.animate().setDuration(1000).x(0).y(20);
 			Intent intent = new Intent(ContentActivity.this, CaptureActivity.class);
 			startActivityForResult(intent, CommonUtils.SCAN_CALLBACK_CODE);
 		}
@@ -136,9 +135,8 @@ public class ContentActivity extends BaseActivity implements OnClickListener {
 				progressDialog = new ProgressDialog(this);
 			}
 			
-			String date =  DateFormatUtils.format(new Date(), "yyyy-MM-dd");
 			String employee_id = SharedPreferencesUtils.with(this).getString("employee_id", null);
-			Backend.getInstance().postAttendance(date, employee_id, content, attendanceCallBack);
+			Backend.getInstance().postAttendance(employee_id, content, attendanceCallBack);
 			
 			progressDialog.show();
 		}
@@ -150,9 +148,8 @@ public class ContentActivity extends BaseActivity implements OnClickListener {
 			progressDialog = new ProgressDialog(this);
 		}
 		
-		String date =  DateFormatUtils.format(new Date(), "yyyy-MM-dd");
 		String employee_id = SharedPreferencesUtils.with(this).getString("employee_id", null);
-		Backend.getInstance().postAttendance(date, employee_id, content, attendanceCallBack);
+		Backend.getInstance().postAttendance(employee_id, content, attendanceCallBack);
 		
 		progressDialog.show();
 	}

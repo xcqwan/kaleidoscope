@@ -23,7 +23,7 @@ import com.koolbao.kaleidoscope.widget.XListView.IXListViewListener;
 import android.os.Bundle;
 import android.util.Log;
 
-public class AttendanceActivity extends BaseActivity implements IXListViewListener {
+public class AttendanceActivity extends BaseListActivity implements IXListViewListener {
 	private XListView attendance_lv;
 	private AttendanceAdapter adapter;
 	
@@ -69,7 +69,7 @@ public class AttendanceActivity extends BaseActivity implements IXListViewListen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_attendance);
 		
-		attendance_lv = (XListView) findViewById(R.id.attendance_lv);
+		attendance_lv = (XListView) getListView();
 		attendance_lv.setPullLoadEnable(false);
 		attendance_lv.setXListViewListener(this);
 		

@@ -41,9 +41,9 @@ public class Backend {
 		serverInstance.postLogin(nickname, password, callback);
 	}
 
-	public void postAttendance(String date, String employee_id, String content,
+	public void postAttendance(String employee_id, String content,
 			Callback<AttendanceBack> callback) {
-		serverInstance.postAttendance(date, employee_id, content, callback);
+		serverInstance.postAttendance(employee_id, content, callback);
 	}
 
 	public void postAttendanceList(String employee_id, String page_avg,
@@ -79,8 +79,7 @@ public class Backend {
 
 		@FormUrlEncoded
 		@POST("/staff_management_app/attendance")
-		void postAttendance(@Field("date") String date,
-				@Field("employee_id") String employee_id,
+		void postAttendance(@Field("employee_id") String employee_id,
 				@Field("content") String content,
 				Callback<AttendanceBack> callback);
 
